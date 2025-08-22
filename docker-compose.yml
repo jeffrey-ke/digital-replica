@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   digital-replica:
-    build: .
+    image: jeffreyke/digital-replica:latest
     volumes:
       - .:/home/src
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
