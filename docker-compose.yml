@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  digital-replica:
+    build: .
+    volumes:
+      - .:/home/src
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    environment:
+      - DISPLAY=${DISPLAY}
+    network_mode: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    stdin_open: true
+    tty: true
+    working_dir: /home/src
