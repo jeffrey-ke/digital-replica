@@ -38,7 +38,7 @@ RUN pip install torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 --index-url h
 RUN pip install "numpy<2.0"
 ARG TORCH_CUDA_ARCH_LIST="8.9"
 
-RUN pip install git:https://github.com/jeffrey-ke/gsplat.git
+RUN pip install git+https://github.com/jeffrey-ke/gsplat.git
 
 # for compiling against gcc 10 as per colmap instructions
 ENV CC=/usr/bin/gcc-10
