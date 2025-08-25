@@ -39,6 +39,7 @@ RUN pip install "numpy<2.0"
 ARG TORCH_CUDA_ARCH_LIST="8.9"
 
 RUN pip install git+https://github.com/jeffrey-ke/gsplat.git
+RUN pip install -r <(curl -s https://raw.githubusercontent.com/nerfstudio-project/gsplat/65042cc501d1cdbefaf1d6f61a9a47575eec8c71/examples/requirements.txt)
 
 # for compiling against gcc 10 as per colmap instructions
 ENV CC=/usr/bin/gcc-10

@@ -2,10 +2,12 @@ version: '3.8'
 
 services:
   digital-replica:
-    image: jeffreyke/digital-replica:latest
+    build: .
+      #image: jeffreyke/digital-replica:latest
     volumes:
       - .:/home/src
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /home/ubuntu/data:/home/data
     environment:
       - DISPLAY=${DISPLAY}
     network_mode: host
