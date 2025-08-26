@@ -1,4 +1,5 @@
 FROM nvidia/cuda:11.8.0-devel-ubuntu22.04
+SHELL ["/bin/bash", "-c"]
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -28,6 +29,7 @@ RUN  apt-get install -y \
     libcgal-dev \
     libceres-dev \
     libcurl4-openssl-dev \
+    curl \
     libmkl-full-dev \
     gcc-10 \
     g++-10 \
@@ -39,8 +41,14 @@ RUN pip install "numpy<2.0"
 ARG TORCH_CUDA_ARCH_LIST="8.9"
 
 RUN pip install git+https://github.com/jeffrey-ke/gsplat.git
-RUN pip install -r <(curl -s https://raw.githubusercontent.com/nerfstudio-project/gsplat/65042cc501d1cdbefaf1d6f61a9a47575eec8c71/examples/requirements.txt)
+RUN curl https://raw.githubusercontent.com/jeffrey-ke/digital-replica/main/examples/requirements.txt | pip install -r /dev/stdin
+# I suspect that pip's global dependency resolver is detecting that these two following vcs packages have incompatible versions
+RUN pip install git+https://github.com/nerfstudio-project/nerfview@4538024fe0d15fd1a0e4d760f3695fc44ca72787
 
+WORKDIR /home
+RUN pip install "setuptools>62.0.0"
+RUN git clone https://github.com/rmbrualla/pycolmap.git && \
+    pip install pycolmap
 # for compiling against gcc 10 as per colmap instructions
 ENV CC=/usr/bin/gcc-10
 ENV CXX=/usr/bin/g++-10
